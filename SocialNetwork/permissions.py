@@ -7,3 +7,7 @@ class Check_API_KEY_Auth(BasePermission):
     def has_permission(self, request, view):
         api_key_secret = request.META.get('API_KEY')
         return api_key_secret == settings.API_KEY_SECRET
+
+
+class Zero:
+    pass
