@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'SocialNetwork.apps.SocialnetworkConfig',
 ]
 
-CUSTOM_APPS = ['rest_framework']
+CUSTOM_APPS = ['rest_framework', 'users']
 
 INSTALLED_APPS += CUSTOM_APPS
 
@@ -124,7 +124,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
 
 API_KEY_SECRET = 'slavaukraine'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+AUTH_USER_MODEL = 'users.CustomUser'
