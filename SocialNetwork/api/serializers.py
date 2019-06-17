@@ -15,6 +15,7 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'timestamp',
+            'likes'
         ]
         read_only_fields = ['pk', 'user']
 

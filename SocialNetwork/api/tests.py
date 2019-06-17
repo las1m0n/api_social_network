@@ -122,3 +122,21 @@ class PostAPITest(APITestCase):
             self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)  # Jwt
             response = self.client.put(url, data, format='json')
             self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_post_like_and_unlike(self):
+        post = Post.objects.first()
+        user = User.objects.first()
+        payload = PAYLOAD_HANDLER(user)
+        token = ENCODE_HANDLER(payload)
+        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)
+
+        url = post.get_api_url()
+        data = {"likes": 1}
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.data["likes"], 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = {"likes": 0}
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.data["likes"], 0)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
